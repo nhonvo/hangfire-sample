@@ -4,6 +4,7 @@ using Api.Infrastructure;
 using Api.Infrastructure.Extensions;
 using Api.Infrastructure.Persistence;
 using Api.Presentation.Middlewares;
+using Hangfire;
 using Serilog;
 
 namespace Api.Presentation.Extensions
@@ -39,7 +40,16 @@ namespace Api.Presentation.Extensions
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
+                Log.Information("Access swagger by  link http://localhost:5253/swagger/index.html");
             }
+            // Use Hangfire dashboard
+            app.UseHangfireDashboard();
+
+            // Enable Hangfire Dashboard
+            app.UseHangfireDashboard("/jobs", new DashboardOptions
+            {
+                Authorization = new[] { new HangfireAuthorizationFilter() }
+            });
 
             app.UseCors("_myAllowSpecificOrigins");
 
