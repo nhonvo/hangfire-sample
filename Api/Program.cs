@@ -1,6 +1,8 @@
 using Api.Core;
+using Api.Infrastructure.Extensions;
 using Api.Presentation.Constants;
 using Api.Presentation.Extensions;
+using Hangfire;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,5 +14,7 @@ var app = await builder.ConfigureServices(configuration)
                         .ConfigurePipelineAsync(configuration);
 
 NewRelic.Api.Agent.NewRelic.StartAgent();
+
+HangfireExtension.RecurringJobsHangfire(configuration);
 
 app.Run();

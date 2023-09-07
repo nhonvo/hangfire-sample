@@ -1,3 +1,5 @@
+using Api.ApplicationLogic.Interface;
+using Api.Core;
 using Hangfire;
 using Hangfire.MemoryStorage;
 
@@ -17,6 +19,13 @@ namespace Api.Infrastructure.Extensions
             services.AddHangfireServer();
 
             return services;
+        }
+        public static void RecurringJobsHangfire(AppConfiguration configuration)
+        {
+            RecurringJob.AddOrUpdate<ISampleJobs>(
+                "sample-job",
+                job => job.Recalculate(),
+                configuration.RecurringJobs.CronjobExpression);
         }
     }
 }

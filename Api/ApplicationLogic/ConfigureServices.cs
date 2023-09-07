@@ -11,12 +11,14 @@ namespace Api.ApplicationLogic
 
             services.AddScoped<IBookReadService, BookReadService>();
             services.AddScoped<IBookWriteService, BookWriteService>();
-            
+
             services.AddScoped<ISeedService, SeedService>();
-            
+
             services.AddSingleton<ICurrentTime, CurrentTime>();
-            
+
             services.AddScoped<ICacheService, CacheService>();
+
+            services.AddScoped<ISampleJobs, SampleJob>();
 
             return services;
         }
